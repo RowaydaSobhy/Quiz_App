@@ -1,16 +1,22 @@
-class QuestionModel{
+class QuestionModel {
   String title;
-List<String> answers;
-String ?correctAnser;
-String? selectAnswer;
+  List<String> answers ;
+  String correctAnswer;
+  String ?  selectedAnswer;
 
 
-QuestionModel(
-  {
-    required this.title,
-    required this.answers,
-    required this.correctAnser,
-    required this.selectAnswer,
-}
-    );
+
+
+
+
+  QuestionModel(
+
+      {
+        required this.correctAnswer,
+        required this.answers,
+        required this.title,
+        required this.selectedAnswer
+      }
+      );
+
 }

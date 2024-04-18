@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/Feature/home/home_screen.dart';
 
@@ -43,9 +44,11 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
           Spacer(),
-          Center(
-            child: Image.asset("assets/images/logo.png"
-              ,height: 59,width: 231,
+      JelloIn(
+            child: Center(
+              child: Image.asset("assets/images/logo.png"
+                ,height: 59,width: 231,
+              ),
             ),
           ),
           Spacer(),

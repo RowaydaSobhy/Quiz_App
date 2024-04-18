@@ -1,39 +1,29 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:quiz/Feature/home/data/custom_dialog_widget.dart';
 import 'package:quiz/Feature/home/data/models/question_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  String?country = "رويدا";
-  List <QuestionModel> questions = [
-    {
-  "title":  "q1",
-  "answers": ["a1", "a2" , "a3"],
-  "correctAnswer": "a1",
-  "selectedAnswer": null
-},
-    {
-      "title":"q5",
-      "answer":["a5","a6"],
-      "correctAnswer":"a5",
-      "selectAnswer":null
-    },
-    {
-      "title": "q1",
-      "answers": ["a1", "a2", "a3"],
-      "correctAnswer": "a1",
-      "selectedAnswer": null
-    }
+class HomeScreenState extends State<HomeScreen> {
 
-  ];
+
+  changeSelectedAnswerToNull( ) {
+    for(int i  = 0 ;  i< questions.length ; i++ ) {
+      questions[i].selectedAnswer  = null;
+    }
+  }
+
+  int questionIndex=0;
+
   int score = 0 ;
+
   checkScore( ) {
     for(int i   = 0 ;  i<questions.length ; i++ ) {
 
@@ -44,41 +34,78 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+List<QuestionModel> questions=[
+
+  QuestionModel(correctAnswer: "rowayda",
+  answers: ["rowayda", "rawan", "rana", "besan"],
+  title: "What is your name",
+  selectedAnswer: null)
+  ,
+
+  QuestionModel(correctAnswer: "22",
+  answers: ["21", "20", "22"],
+  title: "How old are you?",
+  selectedAnswer: null)
+  ,
+
+  QuestionModel(correctAnswer: "pink",
+  answers: ["red", "pink", "black"],
+  title: "Who is your favorite  color?",
+  selectedAnswer: null),
+];
 
 
 
-  int questionIndex = 0;
+  plusQuestionIndex() {
 
-  plusquestionIndex() {
-    if (questionIndex < questions.length - 1) {
-      if(questions[questionIndex].selectAnswer!=null) {
-        questionIndex++;
-        setState(() {});
-      }else{
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("choose one answer"),
-        ));
-      }else{
-      checkScore();
-      showDialog(context: context, builder: (cont )
-      {
-        return CustomResultDialog(
-          score: score,
-          length: questions.length,
-          click: ( ) {
-            questionIndex = 0;
-            score =  0;
-            changeSelectedAnswerToNull();
-            Navigator.pop(context);
-            setState(() {
+  if(questionIndex < questions.length-1 ) {
 
-            });
-          },
-        );
-      } );
-
-    }
+  if(questions[questionIndex].selectedAnswer!=null){
+  questionIndex++;
+  setState(() {
+  });
   }
+  else {
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  content: Text("choose one answer please"),
+  ));
+  }
+  }else{
+    checkScore();
+    showDialog(context: context, builder: (cont )
+    {
+      return CustomDialog(
+        questions: questions,
+        score: score,
+        length: questions.length,
+        click: ( ) {
+          questionIndex = 0;
+          score =  0;
+          changeSelectedAnswerToNull();
+          Navigator.pop(context);
+          setState(() {
+
+          });
+        },
+      );
+    } );
+
+  }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -107,66 +134,119 @@ class _HomeScreenState extends State<HomeScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Text(questions[questionIndex],
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+
               Divider(
                 color: Colors.blueGrey,
                 thickness: 1,
                 endIndent: 10,
                 indent: 10,),
 
-              RadioListTile(
-                  title: Text("رويدا"),
-                  value: "رويدا",    //القيمه الفعليه الي هيا الاجابات
-                  groupValue: country, //القيمه الصحيحه        لما الجروب بيساوي الفاليو بتتلون
-                  onChanged: (val) {    //هنا بقول ان السيلكت انسر الي انا اختارته
-                setState(() {
-                  country = val;
-                });
-              }),
-              RadioListTile(
-                  title: Text("22"),
-                  value: "22", groupValue: country, onChanged: (val) {
-                setState(() {
-                  country = val;
-                });
-              }),
 
-              RadioListTile(
-                  title: Text("اسود"),
-                  value: "اسود ", groupValue: country, onChanged: (val) {
-                setState(() {
-                  country = val;
-                });
-              })
-              ,
-              Divider(
-                color: Colors.blueGrey,
-                thickness: 1,
-                endIndent: 10,
-                indent: 10,),
-
-              TextButton(
-                style:ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                  backgroundColor: MaterialStateProperty.all(Colors.blueGrey)
-                )
-                    ,onPressed: (){
-                      plusquestionIndex();}
-                  , child: Text(
+      Text(questions[questionIndex].title ,
 
 
-                "NEXT",
-              style: TextStyle(color: Colors.white),)),
+      style: const TextStyle(
 
-    Text("${questionIndex + 1}/${questions.length}",
-                style: TextStyle(
-                    fontSize: 20
-                ),
-              ),
-            ],
-          ),
-        ));
+
+      color: Color(0xff006672),
+      fontWeight: FontWeight.w700,
+      fontSize: 14
+      ),
+      textAlign: TextAlign.right,
+      ) ,
+      SizedBox(height: 14,),
+
+      Divider(
+      color: Colors.blueGrey,
+      thickness: 1,
+      endIndent: 10,
+      indent: 10,),
+
+
+      ...questions[questionIndex].answers.map(
+      (answer){
+      return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+
+      Text(answer),
+
+      Radio(
+      activeColor:Color(0xff006672) ,
+      value: answer,
+      groupValue:questions[questionIndex].selectedAnswer ,
+      onChanged: ( x) {
+      questions[questionIndex].selectedAnswer= x;
+      setState(() {
+
+      });
+      },
+      )
+
+      ],
+      );
+      }
+      ),
+      Divider(
+      color: Colors.blueGrey,
+      thickness: 1,
+      endIndent: 10,
+      indent: 10,),
+      SizedBox(height: 14,),
+
+
+
+      TextButton(
+
+      style: ButtonStyle(
+      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8
+      ) ,
+
+      )),
+      backgroundColor: MaterialStateProperty.all(Color(0xff006672))
+      ),
+      onPressed: ( ) {
+
+      plusQuestionIndex();
+
+
+
+
+      } , child: Padding(
+
+
+      padding: const EdgeInsets.symmetric(
+      horizontal: 20.0),
+      child: Text(
+      questionIndex== questions.length-1  ?  "sent":     "next",
+
+      style: TextStyle(
+      color: Colors.white
+      ),
+      ),
+      ))
+      //
+
+
+
+
+
+
+      ],
+      )
+        )
+      , );
+    }
+}
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
-  }
+
 
