@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:quiz/Feature/home/data/custom_dialog_widget.dart';
 import 'package:quiz/Feature/home/data/models/question_model.dart';
+import 'package:quiz/core/color_app.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,20 +38,20 @@ class HomeScreenState extends State<HomeScreen> {
 List<QuestionModel> questions=[
 
   QuestionModel(correctAnswer: "rowayda",
-  answers: ["rowayda", "rawan", "rana", "besan"],
-  title: "What is your name",
+  answers: ["rowayda", "rawan", "rana", "howayda"],
+  title: "?What is your name",
   selectedAnswer: null)
   ,
 
-  QuestionModel(correctAnswer: "22",
+  QuestionModel(correctAnswer: "21",
   answers: ["21", "20", "22"],
-  title: "How old are you?",
+  title: "?How old are you",
   selectedAnswer: null)
   ,
 
   QuestionModel(correctAnswer: "pink",
   answers: ["red", "pink", "black"],
-  title: "Who is your favorite  color?",
+  title: "?Who is your favorite  color",
   selectedAnswer: null),
 ];
 
@@ -93,23 +94,6 @@ List<QuestionModel> questions=[
   }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -123,7 +107,7 @@ List<QuestionModel> questions=[
                 width: 500,
                 height: 150,
                 decoration: BoxDecoration(
-                  color: Colors.blueGrey,
+                  color: AppColor.primerCoior,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50)),
@@ -136,7 +120,7 @@ List<QuestionModel> questions=[
               ),
 
               Divider(
-                color: Colors.blueGrey,
+                color: AppColor.primerCoior,
                 thickness: 1,
                 endIndent: 10,
                 indent: 10,),
@@ -157,7 +141,7 @@ List<QuestionModel> questions=[
       SizedBox(height: 14,),
 
       Divider(
-      color: Colors.blueGrey,
+      color: AppColor.primerCoior,
       thickness: 1,
       endIndent: 10,
       indent: 10,),
@@ -166,7 +150,7 @@ List<QuestionModel> questions=[
       ...questions[questionIndex].answers.map(
       (answer){
       return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
 
       Text(answer),
@@ -188,7 +172,7 @@ List<QuestionModel> questions=[
       }
       ),
       Divider(
-      color: Colors.blueGrey,
+      color: AppColor.primerCoior,
       thickness: 1,
       endIndent: 10,
       indent: 10,),

@@ -14,10 +14,10 @@ class CorrectAnswerScreen extends StatelessWidget {
     print(questions[0].title.toString());
     return Scaffold(
       appBar:AppBar(
+        backgroundColor: Colors.white,
         toolbarHeight:100 ,
         flexibleSpace:CustomAppbar(
           name: "checkAnswer",
-
         ) ,
       ) ,
       body: CheckAnswerBody(questions: questions,
